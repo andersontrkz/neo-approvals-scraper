@@ -4,4 +4,5 @@
 env/
 venv/
 
-
+# Byte-compiled
+__pycache__/
