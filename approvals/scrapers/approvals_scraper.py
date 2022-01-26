@@ -1,3 +1,4 @@
+from validators.cpf_validator import CpfValidator
 from scraper import Scraper
 from cleaners.cleaner import Cleaner
 
@@ -20,14 +21,15 @@ class ApprovalsScraper(Scraper):
         cpf_list = self.scrape_getall(approvals_html, self.selectors['cpf_list'])
 
         for cpf in cpf_list:
-            approval_html = self.fetch_url(f'/candidate/{cpf}')
-            approval_data = self.scrape_getall(approval_html, self.selectors['approval_data'])
+            if (CpfValidator.validate(cpf)):
+                approval_html = self.fetch_url(f'/candidate/{cpf}')
+                approval_data = self.scrape_getall(approval_html, self.selectors['approval_data'])
 
-            name = Cleaner.name_cleaning(approval_data[1])
-            score = Cleaner.score_cleaning(approval_data[3])
-            cpf = Cleaner.cpf_cleaning(cpf)
+                name = Cleaner.name_cleaning(approval_data[1])
+                score = Cleaner.score_cleaning(approval_data[3])
+                cpf = Cleaner.cpf_cleaning(cpf)
 
-            self.approvals_data.append({'cpf': cpf, 'name': name, 'score': score})
+                self.approvals_data.append({'cpf': cpf, 'name': name, 'score': score})
 
     def scrape_approvals_next_page(self):
         for x in range(2):
