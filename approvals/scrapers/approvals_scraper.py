@@ -31,7 +31,7 @@ class ApprovalsScraper(Scraper):
 
                 self.approvals_data.append({'cpf': cpf, 'name': name, 'score': score})
 
-    def scrape_approvals_next_page(self):
+    def scrape_approvals_all_pages(self):
         for x in range(2):
             approvals_html = self.fetch_url(self.page_path)
             self.scrape_approvals_on_html(approvals_html)
@@ -41,4 +41,4 @@ class ApprovalsScraper(Scraper):
                 break
 
             self.page_path = next_page_path
-            print(f'Running: {len(self.approvals_data)} CPFs collected successfully')
+            print(f'Running: {len(self.approvals_data)} `valid` CPFs successfully collected')
