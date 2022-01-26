@@ -1,5 +1,5 @@
 from validators.cpf_validator import CpfValidator
-from scraper import Scraper
+from scrapers.scraper import Scraper
 from cleaners.cleaner import Cleaner
 
 
@@ -32,7 +32,7 @@ class ApprovalsScraper(Scraper):
                 self.approvals_data.append({'cpf': cpf, 'name': name, 'score': score})
 
     def scrape_approvals_all_pages(self):
-        for x in range(2):
+        while True:
             approvals_html = self.fetch_url(self.page_path)
             self.scrape_approvals_on_html(approvals_html)
             next_page_path = self.scrape_get(approvals_html, self.selectors['next_page_path'])

@@ -1,4 +1,4 @@
-from approvals_scraper import ApprovalsScraper
+from scrapers.approvals_scraper import ApprovalsScraper
 from database.models.approvals_model import ApprovalsModel
 
 
