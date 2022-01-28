@@ -1,16 +1,17 @@
+import timeit
 from time import sleep
-from database.models.approvals_model import ApprovalsModel
-from validators.cpf_validator import CpfValidator
+
 from scrapers.scraper import Scraper
 from cleaners.cleaner import Cleaner
+from validators.cpf_validator import CpfValidator
+from database.models.approvals_model import ApprovalsModel
 from threads.multithread import Multithread
-import timeit
 
 
 class ApprovalsScraper(Scraper):
     approvals_list = []
     initial_page = 1
-    last_page = 10
+    last_page = 4672
     base_url = 'https://sample-university-site.herokuapp.com'
     selectors = {
       'cpf_list': 'body > li > a ::text',

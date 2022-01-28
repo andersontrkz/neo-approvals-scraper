@@ -1,4 +1,3 @@
-from mimetypes import init
 from scrapers.approvals_scraper import ApprovalsScraper
 from database.models.approvals_model import ApprovalsModel
 import sys
@@ -13,7 +12,7 @@ class Main:
     @classmethod
     def run_approvals_scraper(cls):
         ApprovalsModel.initialize()
-        ApprovalsScraper.initialize_runtime()
+        ApprovalsScraper.initialize()
 
 
 if __name__ == '__main__':
