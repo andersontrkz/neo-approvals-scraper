@@ -6,14 +6,14 @@ class Main:
     collected_approvals = []
 
     @classmethod
-    def run_approvals_scraper(self):
+    def run_approvals_scraper(cls):
         approvals_scraper = ApprovalsScraper()
         approvals_scraper.scrape_approvals_all_pages()
-        self.collected_approvals = approvals_scraper.approvals_data
+        cls.collected_approvals = approvals_scraper.approvals_data
 
     @classmethod
-    def save_collected_approvals(self):
-        for approval in self.collected_approvals:
+    def save_collected_approvals(cls):
+        for approval in cls.collected_approvals:
             ApprovalsModel.insert_approval(approval['cpf'], approval['name'], approval['score'])
 
 

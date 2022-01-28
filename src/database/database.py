@@ -14,9 +14,9 @@ class Database:
     )
 
     @classmethod
-    def connect_database(self):
+    def connect_database(cls):
         try:
-            cursor_instance = self.connection_instance.cursor()
+            cursor_instance = cls.connection_instance.cursor()
             sql_statement = "CREATE DATABASE IF NOT EXISTS " + env['DB_NAME']
             cursor_instance.execute(sql_statement)
             cursor_instance.execute("USE " + env['DB_NAME'])

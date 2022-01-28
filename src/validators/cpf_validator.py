@@ -7,7 +7,7 @@ from .validator import Validator
 
 class CpfValidator(Validator):
     @classmethod
-    def validate(self, cpf: str) -> bool:
+    def validate(cls, cpf: str) -> bool:
         # Validaate format
         if not re.match(r'\d{3}\.\d{3}\.\d{3}-\d{2}', cpf):
             return False

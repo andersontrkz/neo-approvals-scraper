@@ -14,9 +14,6 @@ class ApprovalsScraper(Scraper):
       'approval_data': 'body > div ::text',
     }
 
-    # BASED ON *
-    # https://pt.stackoverflow.com/questions/217042/como-remover-palavras-indesejadas-de-um-texto
-
     def scrape_approvals_on_html(self, approvals_html):
         cpf_list = self.scrape_getall(approvals_html, self.selectors['cpf_list'])
 
