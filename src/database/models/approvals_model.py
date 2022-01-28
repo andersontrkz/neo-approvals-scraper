@@ -43,7 +43,7 @@ class ApprovalsModel(Database):
         try:
             cursor_instance = cls.connect_database()
 
-            cursor_instance.executemany('INSERT INTO ' + cls.__table_name + ' (cpf, name, score) VALUES (%s, %s, %s)', (approvals))
+            cursor_instance.executemany('INSERT IGNORE INTO ' + cls.__table_name + ' (cpf, name, score) VALUES (%s, %s, %s)', (approvals))
             cursor_instance.connection.commit()
 
         except Exception as e:
