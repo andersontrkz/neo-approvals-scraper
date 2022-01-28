@@ -94,20 +94,27 @@ Important! All scripts must be run in the project root directory.
 3. Install the requirements running the `python3 -m pip install -r requirements.txt` script.
 
 
+### Configuring The Project
+
+4. Configure the `.env` file in the project's root folder, using the template provided, with the sql database of your choice.
+
+
 ### Running The Project
 
-4. In the project root directory run the `python3 src/main.py` script to run the main approvals scraper.
+5. In the project root directory run the `python3 src/main.py` script to run the main approvals scraper.
 
+6. If all goes well, you will be able to view the feedback in the terminal. Feedback includes scraping actions on the pages, capturing data, storing this data and, finally, completing the workflow.
 
 ### Running The Tests
 
-5. To run all tests, in the project root directory run the `python3 -m pytest` script.
+7. To run all tests, in the project root directory run the `python3 -m pytest` script.
 
-6. It is still possible to run the tests separately, through the name of the test file. Example:
+8. It is still possible to run the tests separately, through the name of the test file. Example:
     6.1 Cleaner test: `python3 -m pytest tests/test_cleaner.py`
     6.2 CPF Validator test: `python3 -m pytest tests/test_cpf_validator.py `
     6.3 Database test: `python3 -m pytest tests/test_database.py`
 
+9. If all goes well, you will be able to see the feedback in the terminal. Feedback counts the number of tests executed, the number of tests that were successfully executed, and the number of tests that failed (if any).
 
 ## Project Structure
 ```md
