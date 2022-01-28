@@ -12,7 +12,7 @@ class Main:
     @classmethod
     def run_approvals_scraper(cls):
         ApprovalsModel.initialize()
-        ApprovalsScraper.initialize_runtime()
+        ApprovalsScraper.initialize()
 
 
 if __name__ == '__main__':

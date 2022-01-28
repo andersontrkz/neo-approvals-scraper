@@ -1,12 +1,12 @@
-# Neo Approvals Scraper
-
-This project is a challenge provided by Neoway.
-
-
 ### Welcome to the Neo Approvals Scrapper project repository!
 ![neo](https://68.media.tumblr.com/ee44f0f6df3e2499cb1d24a6f9a2ab1b/tumblr_inline_olqkx3ZDrF1rlk3i5_500.gif)
 
 Did you get the reference? You are about to meet Neo, a scrapper approvals
+
+
+# Neo Approvals Scraper
+
+This project is a challenge provided by Neoway.
 
 
 ## About
@@ -144,6 +144,47 @@ Important! All scripts must be run in the project root directory.
 ├── README.md
 └── requirements.txt
 ```
+
+## Database Data Structure
+
+| FIELD | TYPE | NULL | KEY | DEFAULT | EXTRA |
+| ------ | ------ | ------ | ------ | ------ | ------ |
+| cpf | char(15) | NO | PRI | NULL |  |
+| name | varchar(80) | NO |  | NULL |  |
+| score | float | NO |  | NULL |  |
+
+
+## Workflow
+
+Here is the area destined to demystify what happens in the code;
+
+### class Cleaner:
+Responsible for data cleaning. It is able to clear cpf, name and punctuation. Removes special characters, accents, unnecessary spaces and unwanted keywords.
+
+### class Validator:
+It's a way to build new validators. Thus, all validators end up having this behavior obligatorily.
+
+### class CpfValidator:
+In essence, it is a Validator. Its only function is to validate the CPFs. Thus, only numerically valid CPF's will be stored.
+
+### class Database:
+Responsible for connecting to the database. In addition to providing a course for running command lines to insert data into the database.
+
+### class ApprovalsModel
+It inherits behaviors from the Database class, and can use its cursor to insert the data of those approved in its table. You can enter one by one or several at once.
+
+### class Scraper
+Access the target page through a request, and capture the data in html, for analysis by the scraper.
+
+### class Multithread
+Only responsible for executing functions in parallel, creating logical threads and executing their functions in memory.
+
+### class ApprovalScraper
+Inherits the behaviors of the Scraper class. Its main objective is to capture the data of those approved, including CPF, name and score. It is also able to scroll through pages. Its processes run based on the principle of recursion and multi-process execution.
+
+### class Main
+The main class is responsible for the kick-off. It instantiates a database connection and initializes our approved screenper.
+
 
 ## Contributing
 
