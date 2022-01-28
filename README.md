@@ -3,6 +3,11 @@
 This project is a challenge provided by Neoway.
 
 
+## Welcome to the Neo Approvals Scrapper project repository
+![neo](https://i.gifer.com/embedded/download/IuOF.gif)
+Did you get the reference? You are about to meet Neo, a scrapper approvals
+
+
 ## About
 
 This project develops the challenge proposed by Neoway.
@@ -61,6 +66,13 @@ The objective was to develop a web scraper within the proposed requirements.
 - [Python](https://docs.python.org/3/)
 - [Parsel](https://parsel.readthedocs.io/)
 - [Requests](https://docs.python-requests.org/en/latest/)
+- [Re](https://docs.python.org/3/library/re.html)
+- [Unidecode](https://docs.python.org/3/howto/unicode.html)
+- [Timeit](https://docs.python.org/3/library/timeit.html)
+- [Time](https://docs.python.org/3/library/time.html)
+- [Threading](https://docs.python.org/3/library/threading.html)
+- [ABC](https://docs.python.org/3/library/abc.html)
+- [Sys](https://docs.python.org/3/library/sys.html)
 - [PyMySQL](https://pymysql.readthedocs.io/en/latest/)
 - [Python Dotenv](https://pypi.org/project/python-dotenv/)
 - [Pytest](https://docs.pytest.org/en/6.2.x/contents.html)

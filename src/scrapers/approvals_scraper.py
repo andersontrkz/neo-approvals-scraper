@@ -11,7 +11,7 @@ from threads.multithread import Multithread
 class ApprovalsScraper(Scraper):
     approvals_list = []
     initial_page = 1
-    last_page = 10
+    last_page = 4672
     base_url = 'https://sample-university-site.herokuapp.com'
     selectors = {
       'cpf_list': 'body > li > a ::text',
