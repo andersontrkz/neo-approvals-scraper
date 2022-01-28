@@ -1,4 +1,3 @@
-from mimetypes import init
 from scrapers.approvals_scraper import ApprovalsScraper
 from database.models.approvals_model import ApprovalsModel
 import sys
