@@ -193,6 +193,18 @@ Inherits the behaviors of the Scraper class. Its main objective is to capture th
 The main class is responsible for the kick-off. It instantiates a database connection and initializes our approved screenper.
 
 
+## Tests
+
+### CPF Validator
+Test the cpfs validation. Tests valid and non-valid cpfs numerically.
+
+### Cleaner
+Tests the cleanliness of names, among them tests the presence or absence of accents, unnecessary spaces and unwanted keywords.
+
+### Database
+Tests the creation of the test database. Simulates creating a table and inserting data. As well as its elimination at the end of the process.
+
+
 ## Contributing
 
 Contributions are always welcome! If you have any ideas, suggestions, fixes, feel free to contribute. You can do that by going through the following steps:
