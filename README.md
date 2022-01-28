@@ -1,7 +1,7 @@
 ### Welcome to the Neo Approvals Scrapper project repository!
 ![neo](https://68.media.tumblr.com/ee44f0f6df3e2499cb1d24a6f9a2ab1b/tumblr_inline_olqkx3ZDrF1rlk3i5_500.gif)
 
-Did you get the reference? You are about to meet Neo, a scrapper approvals
+Did you get the reference? Now you will know Neo, a scrapper approvals.
 
 
 # Neo Approvals Scraper
