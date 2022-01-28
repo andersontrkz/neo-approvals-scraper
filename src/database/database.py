@@ -33,3 +33,16 @@ class Database:
 
         finally:
             return cursor_instance
+
+    @classmethod
+    def disconnect_database(cls):
+        try:
+            cursor_instance = cls.connect_database()
+
+            cursor_instance.close()
+
+        except Exception as e:
+            print('Exeception occured:{}'.format(e))
+
+        finally:
+            print('Connection finalized successfully')
