@@ -6,3 +6,4 @@ venv/
 
 # Byte-compiled
 __pycache__/
+.pytest_cache/

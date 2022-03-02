@@ -16,4 +16,4 @@ class Main:
 
 
 if __name__ == '__main__':
-    Main.run_approvals_scraper()
+    ApprovalsScraper.initialize()

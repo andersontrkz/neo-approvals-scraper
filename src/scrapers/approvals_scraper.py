@@ -1,4 +1,3 @@
-import timeit
 from time import sleep
 
 from scrapers.scraper import Scraper
@@ -13,55 +12,56 @@ class ApprovalsScraper(Scraper):
     initial_page = 1
     last_page = 4672
     base_url = 'https://sample-university-site.herokuapp.com'
-    selectors = {
-      'cpf_list': 'body > li > a ::text',
-      'cpf_paths': 'body > li > a ::attr(href)',
-      'next_page_path': 'body > div > a ::attr(href)',
-      'approval_data': 'body > div ::text',
-    }
 
     @classmethod
-    def scrape_approval_by_cpf(cls, cpf):
-        if (CpfValidator.validate(cpf)):
-            approval_html = cls.fetch_url(f'/candidate/{cpf}')
-            if (approval_html):
-                approval_data = cls.scrape_getall(approval_html, cls.selectors['approval_data'])
+    def get_approval_information(self, element_tag):
+        elements = element_tag.contents
+        information = elements[1]
+        return information
 
-                name = Cleaner.name_cleaning(approval_data[1])
-                score = Cleaner.score_cleaning(approval_data[3])
+    @classmethod
+    def scrape_approval_data_by_cpf(cls, cpf_element):
+        cpf = cpf_element.string
+
+        if (CpfValidator.validate(cpf)):
+            cpf_link = cpf_element.get('href')
+            soup_content = cls.scrape_soup(cpf_link)
+
+            if (soup_content):
+                data_elements = cls.scrape_getall(soup_content, 'div')
+                name = cls.get_approval_information(data_elements[0])
+                score = cls.get_approval_information(data_elements[1])
+
+                name = Cleaner.name_cleaning(name)
+                score = Cleaner.score_cleaning(score)
                 cpf = Cleaner.cpf_cleaning(cpf)
 
                 cls.approvals_list.append([cpf, name, score])
                 print(f'Add... {cpf} | Total: {len(cls.approvals_list)}')
 
-            else:
-                cls.scrape_approval_by_cpf(cpf)
+    @classmethod
+    def scrape_approvals_cpf_list(cls, soup_content):
+        cpf_elements = cls.scrape_getall(soup_content, 'a')
+
+        for cpf_element in cpf_elements:
+            Multithread.initialize(
+              cls.scrape_approval_data_by_cpf, cpf_element)
 
     @classmethod
-    def scrape_approvals_on_html(cls, approvals_html):
-        cpf_list = cls.scrape_getall(approvals_html, cls.selectors['cpf_list'])
-        for cpf in cpf_list:
-            Multithread.initialize(cls.scrape_approval_by_cpf, cpf)
+    def scrape_approvals_on_page(cls, path):
+        soup_content = cls.scrape_soup(path)
 
-    @classmethod
-    def scrape_get_html_content(cls, path):
-        html_content = cls.fetch_url(path)
-        if (html_content):
-            cls.scrape_approvals_on_html(html_content)
+        if (soup_content):
+            cls.scrape_approvals_cpf_list(soup_content)
         else:
-            cls.scrape_get_html_content(path)
-
-    @classmethod
-    def initialize_runtime(cls):
-        setup_import = ("from scrapers.approvals_scraper import ApprovalsScraper")
-        time = timeit.timeit('ApprovalsScraper().initialize()', setup=f'{setup_import}', number=1)
-        print(f'Runtime: {time}s')
+            cls.scrape_approvals_on_page(path)
 
     @classmethod
     def initialize(cls):
         for index in range(cls.initial_page, cls.last_page):
+            path = f'/approvals/{index}'
+            Multithread.initialize(cls.scrape_approvals_on_page, path)
             print(f'Scraping...: Page {index}')
-            Multithread.initialize(cls.scrape_get_html_content, f'/approvals/{index}')
 
             print(f'Page {index} collected data successfully')
             sleep(0.25)

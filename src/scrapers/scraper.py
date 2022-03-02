@@ -1,4 +1,4 @@
-from parsel import Selector
+from bs4 import BeautifulSoup
 import requests
 
 
@@ -15,7 +15,7 @@ class Scraper:
 
         except requests.HTTPError:
             print(response.status_code)
-            return response.status_code
+            return None
 
         finally:
             if response != "" and response.status_code == 200:
@@ -23,13 +23,17 @@ class Scraper:
             return None
 
     @classmethod
-    def scrape_get(cls, html_content, selector_tag):
-        selector = Selector(html_content)
-        element = selector.css(selector_tag).get()
+    def scrape_soup(cls, fetch_path):
+        html_content = cls.fetch_url(fetch_path)
+        soup = BeautifulSoup(html_content, 'html.parser')
+        return soup
+
+    @classmethod
+    def scrape_get(cls, soup_content, soup_tag):
+        element = soup_content.find(soup_tag)
         return element
 
     @classmethod
-    def scrape_getall(cls, html_content, selector_tag):
-        selector = Selector(html_content)
-        elements = selector.css(selector_tag).getall()
+    def scrape_getall(cls, soup_content, soup_tag):
+        elements = soup_content.find_all(soup_tag)
         return elements
