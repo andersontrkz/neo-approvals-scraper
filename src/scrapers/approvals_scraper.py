@@ -1,16 +1,11 @@
-from time import sleep
-
 from scrapers.scraper import Scraper
 from cleaners.cleaner import Cleaner
 from validators.cpf_validator import CpfValidator
-from database.models.approvals_model import ApprovalsModel
 from threads.multithread import Multithread
 
 
 class ApprovalsScraper(Scraper):
     approvals_list = []
-    initial_page = 1
-    last_page = 4672
     base_url = 'https://sample-university-site.herokuapp.com'
 
     @classmethod
@@ -22,7 +17,6 @@ class ApprovalsScraper(Scraper):
     @classmethod
     def scrape_approval_data_by_cpf(cls, cpf_element):
         cpf = cpf_element.string
-
         if (CpfValidator.validate(cpf)):
             cpf_link = cpf_element.get('href')
             soup_content = cls.scrape_soup(cpf_link)
@@ -37,37 +31,22 @@ class ApprovalsScraper(Scraper):
                 cpf = Cleaner.cpf_cleaning(cpf)
 
                 cls.approvals_list.append([cpf, name, score])
-                print(f'Add... {cpf} | Total: {len(cls.approvals_list)}')
+
+                length = len(cls.approvals_list)
+                print(f'Add... {cpf} | Total: {length}')
 
     @classmethod
     def scrape_approvals_cpf_list(cls, soup_content):
         cpf_elements = cls.scrape_getall(soup_content, 'a')
-
-        for cpf_element in cpf_elements:
-            Multithread.initialize(
-              cls.scrape_approval_data_by_cpf, cpf_element)
+        for cpf in cpf_elements:
+            Multithread.initialize(cls.scrape_approval_data_by_cpf, cpf)
 
     @classmethod
     def scrape_approvals_on_page(cls, path):
         soup_content = cls.scrape_soup(path)
-
-        if (soup_content):
-            cls.scrape_approvals_cpf_list(soup_content)
-        else:
-            cls.scrape_approvals_on_page(path)
+        cls.scrape_approvals_cpf_list(soup_content)
 
     @classmethod
-    def initialize(cls):
-        for index in range(cls.initial_page, cls.last_page):
-            path = f'/approvals/{index}'
-            Multithread.initialize(cls.scrape_approvals_on_page, path)
-            print(f'Scraping...: Page {index}')
-
-            print(f'Page {index} collected data successfully')
-            sleep(0.25)
-
-        while Multithread().active_threads() > 0:
-            if Multithread().active_threads() < 2:
-                print('Saving approvals...')
-                ApprovalsModel.insert_approvals(cls.approvals_list)
-                break
+    def initialize(cls, index):
+        path = f'/approvals/{index}'
+        cls.scrape_approvals_on_page(path)
