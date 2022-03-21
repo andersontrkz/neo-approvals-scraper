@@ -14,6 +14,16 @@ if __name__ == '__main__':
 
     scrapper = ApprovalsScraper()
 
+    """
+    [Alternative to async initialize example]
+    import asyncio
+
+    def start(index):
+        lopp = asyncio.new_event_loop()
+        asyncio.set_event_loop(lopp)
+        lopp.run_until_complete(scrapper.async_initialize(index))
+    """
+
     TaskManager(scrapper.initialize).initialize()
 
     print("Running async jobs...")

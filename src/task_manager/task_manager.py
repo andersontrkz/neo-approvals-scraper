@@ -12,7 +12,7 @@ class TaskManager:
 
     task = ''
     jobs = Queue()
-    max_threads = 99
+    max_threads = 49
 
     def execute_task(self, arg):
         self.task(arg)

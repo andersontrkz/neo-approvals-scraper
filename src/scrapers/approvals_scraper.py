@@ -50,3 +50,55 @@ class ApprovalsScraper(Scraper):
     def initialize(cls, index):
         path = f'/approvals/{index}'
         cls.scrape_approvals_on_page(path)
+
+    """
+    [Alternative to async initialize example]
+    import asyncio
+    import nest_asyncio
+    import concurrent.futures
+
+    async def async_initialize(cls, index):
+        print(f'initialize {index}')
+        nest_asyncio.apply()
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+
+            loop = asyncio.get_event_loop()
+            futures = [
+                loop.run_in_executor(
+                    executor,
+                    cls.fetch,
+                    cls.base_url + '/approvals/' + str(index),
+                    # print(cls.base_url + '/approvals/' + str(index))
+                )
+            ]
+            for response in await asyncio.gather(*futures):
+                # print(f'Scrapping approval page {response.request.path_url}')
+                print(f'{response} | {str(index)}')
+                cls.scrape_approvals_on_page(response.text, loop)
+    """
+
+    """
+    [Alternative to async scrape_approvals_cpf_list example]
+    async def scrape_approvals_cpf_list(cls, soup_content):
+        # print('scrape_approvals_cpf_list')
+        cpf_elements = cls.scrape_getall_children(soup_content, 'li', 'a')
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+
+            loop = asyncio.get_event_loop()
+            futures = [
+                loop.run_in_executor(
+                    executor,
+                    cls.fetch,
+                    cls.base_url + '/candidate/' + str(cpf_element.string),
+                    # "print(f'Scrapping cpf {cpf_element.string}')"
+                )
+                for cpf_element in cpf_elements
+            ]
+            for response in await asyncio.gather(*futures):
+                cpf = response.request.path_url.split('/candidate/')[1]
+                soup = cls.scrape_soup(response.text)
+                # print('scrape_approvals_cpf_list')
+                # print(f'{threading.active_count()}')
+                cls.scrape_approval_data_by_cpf(cpf, soup)
+      """

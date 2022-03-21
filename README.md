@@ -6,12 +6,9 @@ Did you get the reference? Now you will know Neo, a scrapper approvals.
 
 # Neo Approvals Scraper
 
-This project is a challenge provided by Neoway.
-
 
 ## About
 
-This project develops the challenge proposed by Neoway.
 In this project you will get to know Neo Approvals Scraper, a web scraper application with the approved results of an entrance exam. Focused on capturing information such as CPF, name and test score, saving these data in a relational database.
 
 
@@ -51,6 +48,7 @@ The objective was to develop a web scraper within the proposed requirements.
     - [x]  Database;
     - [x]  Approvals Model;
     - [x]  Multithread;
+    - [x]  Task Manager;
     - [x]  Tests.
 
 
@@ -132,6 +130,10 @@ Important! All scripts must be run in the project root directory.
 |   |   ├── approvals_scraper.py
 |   |   └── scraper.py
 |   |
+│   ├── task_manager
+|   |   ├── buffer.py
+|   |   └── task_manager.py
+|   |
 │   ├── threads
 |   |   └── multithread.py
 |   |
@@ -186,6 +188,9 @@ Access the target page through a request, and capture the data in html, for anal
 ### class Multithread
 Only responsible for executing functions in parallel, creating logical threads and executing their functions in memory.
 
+### class TaskManager
+Manage queue of tasks to be executed through a buffer.
+
 ### class ApprovalScraper
 Inherits the behaviors of the Scraper class. Its main objective is to capture the data of those approved, including CPF, name and score. It is also able to scroll through pages. Its processes run based on the principle of recursion and multi-process execution.
 
@@ -205,6 +210,20 @@ Tests the cleanliness of names, among them tests the presence or absence of acce
 Tests the creation of the test database. Simulates creating a table and inserting data. As well as its elimination at the end of the process.
 
 
+## Supplement Research
+
+- [In python whats the cleanest way to read from a queue while its not empty an](https://stackoverflow.com/questions/45920583/in-python-whats-the-cleanest-way-to-read-from-a-queue-while-its-not-empty-an)
+- [How could i use requests in asyncio](https://stackoverflow.com/questions/22190403/how-could-i-use-requests-in-asyncio)
+- [The right way to limit maximum number of threads running at once](https://stackoverflow.com/questions/19369724/the-right-way-to-limit-maximum-number-of-threads-running-at-once)
+- [Threading queue working example](https://stackoverflow.com/questions/35160417/threading-queue-working-example)
+- [Python threading max number of threads to run](https://stackoverflow.com/questions/38560470/python-threading-max-number-of-threads-to-run)
+- [How to fix a fatal python error enter buffered busy could not aquire lock fo](https://stackoverflow.com/questions/65825599/how-to-fix-a-fatal-python-error-enter-buffered-busy-could-not-aquire-lock-fo)
+- [Max retries exceeded with url in requests](https://stackoverflow.com/questions/23013220/max-retries-exceeded-with-url-in-requests)
+- [This event loop is already running in python](https://stackoverflow.com/questions/46827007/runtimeerror-this-event-loop-is-already-running-in-python)
+- [There is no current event loop in thread thread 1 multithread](https://stackoverflow.com/questions/48725890/runtimeerror-there-is-no-current-event-loop-in-thread-thread-1-multithreadi)
+- [Asynchronous requests with python requests](https://stackoverflow.com/questions/9110593/asynchronous-requests-with-python-requests)
+
+
 ## Contributing
 
 Contributions are always welcome! If you have any ideas, suggestions, fixes, feel free to contribute. You can do that by going through the following steps:
@@ -214,11 +233,6 @@ Contributions are always welcome! If you have any ideas, suggestions, fixes, fee
 3. Make some changes;
 4. Test your changes;
 5. Push your branch and open a Pull Request.
-
-
-## Used by
-
-This project is a web scraper challenge, provided by Neoway.
 
 
 ## License

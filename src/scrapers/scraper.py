@@ -10,7 +10,7 @@ class Scraper:
     def fetch_url(cls, url_path):
         fetch_to_url = cls.base_url + url_path
         session = requests.Session()
-        retry = Retry(connect=3, backoff_factor=0.5)
+        retry = Retry(connect=5, backoff_factor=0.5)
         adapter = HTTPAdapter(max_retries=retry)
         session.mount('https://', adapter)
         response = session.get(fetch_to_url)
