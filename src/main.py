@@ -12,7 +12,7 @@ from threads.multithread import Multithread
 if __name__ == '__main__':
     t0 = time.time()
 
-    scrapper = ApprovalsScraper()
+    scraper = ApprovalsScraper()
 
     """
     [Alternative to async initialize example]
@@ -21,17 +21,17 @@ if __name__ == '__main__':
     def start(index):
         lopp = asyncio.new_event_loop()
         asyncio.set_event_loop(lopp)
-        lopp.run_until_complete(scrapper.async_initialize(index))
+        lopp.run_until_complete(scraper.async_initialize(index))
     """
 
-    TaskManager(scrapper.initialize).initialize()
+    TaskManager(scraper.initialize).initialize()
 
     print("Running async jobs...")
     while Multithread().active_threads() > 0:
         if Multithread().active_threads() < 2:
             t1 = time.time()
-            length = len(scrapper.approvals_list)
+            length = len(scraper.approvals_list)
             print(f"{t1-t0} seconds to download {length} approvals")
             print('Saving approvals...')
-            ApprovalsModel.insert_approvals(scrapper.approvals_list)
+            ApprovalsModel.insert_approvals(scraper.approvals_list)
             break
