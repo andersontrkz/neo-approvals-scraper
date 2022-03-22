@@ -1,5 +1,6 @@
-from parsel import Selector
 import requests
+from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter, Retry
 
 
 class Scraper:
@@ -7,29 +8,27 @@ class Scraper:
 
     @classmethod
     def fetch_url(cls, url_path):
-        response = ""
         fetch_to_url = cls.base_url + url_path
-        try:
-            response = requests.get(fetch_to_url, timeout=3)
-            response.raise_for_status()
+        session = requests.Session()
+        retry = Retry(connect=5, backoff_factor=0.5)
+        adapter = HTTPAdapter(max_retries=retry)
+        session.mount('https://', adapter)
+        response = session.get(fetch_to_url)
 
-        except requests.HTTPError:
-            print(response.status_code)
-            return response.status_code
-
-        finally:
-            if response != "" and response.status_code == 200:
-                return response.text
-            return None
+        return response.text
 
     @classmethod
-    def scrape_get(cls, html_content, selector_tag):
-        selector = Selector(html_content)
-        element = selector.css(selector_tag).get()
+    def scrape_soup(cls, fetch_path):
+        html_content = cls.fetch_url(fetch_path)
+        soup = BeautifulSoup(html_content, 'html.parser')
+        return soup
+
+    @classmethod
+    def scrape_get(cls, soup_content, soup_tag):
+        element = soup_content.find(soup_tag)
         return element
 
     @classmethod
-    def scrape_getall(cls, html_content, selector_tag):
-        selector = Selector(html_content)
-        elements = selector.css(selector_tag).getall()
+    def scrape_getall(cls, soup_content, soup_tag):
+        elements = soup_content.find_all(soup_tag)
         return elements
